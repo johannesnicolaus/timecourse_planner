@@ -1,44 +1,34 @@
 
 
-sidebar <- function(){
-  # Sidebar panel for inputs ----
-  sidebarPanel(
-    
-    # Input: Slider for the number of bins ----
-    sliderInput(inputId = "bins",
-                label = "Number of bins:",
-                min = 1,
-                max = 50,
-                value = 30)
-    
-  )
-}
+
+textinput1 <- textInput("bins", label = "Number of bins", value = "NA")
 
 
-textinput1 <- textInput("bins", label = "Number of bins", value = NA)
+start_time <- shinyTime::timeInput("time2", "Time:", value = Sys.time())
 
 
-
+numinput <- numericInput("num", "Number one", value = 0, min = 0, max = 100)
 
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
   
-  # App title ----
-  titlePanel("Hello Shiny!"),
-  
-  # Sidebar layout with input and output definitions ----
-  sidebarLayout(
+  pageWithSidebar(
     
-    sidebar(),
-    textinput1(),
+    # Application title
+    headerPanel("Visualization of gene expression levels"),
     
+    sidebarPanel(
+      start_time,
+      numinput
+      
+    ),
     
     # Main panel for displaying outputs ----
     mainPanel(
       
       # Output: Histogram ----
-      plotOutput(outputId = "distPlot")
+      # plotOutput(outputId = "distPlot")
       
     )
   )
