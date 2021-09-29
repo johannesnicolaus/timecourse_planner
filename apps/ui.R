@@ -1,14 +1,16 @@
+library(plotly)
 
 
+expname_1 <- textInput("name_1", label = "Activity", value = "experiment_1")
 
-textinput1 <- textInput("bins", label = "Number of bins", value = "NA")
-
-
-start_time <- shinyTime::timeInput("time2", "Time:", value = Sys.time())
+start_time <- shinyTime::timeInput("time_1", "Start time:", value = Sys.time(), seconds = FALSE)
 
 
-numinput <- numericInput("num", "Number one", value = 0, min = 0, max = 100)
+# numinput <- numericInput("num", "Number one", value = 0, min = 0, max = 100)
 
+activity_1 <- textInput('activity_vec_1', 'Enter a vector of activity (comma delimited)', "plate cells,treatment,sampling")
+
+time_1 <- textInput('time_vec_1', 'Enter a vector of time required for each activity (comma delimited, H:min)', "1:30,0:30,4:10")
 
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
@@ -16,11 +18,14 @@ ui <- fluidPage(
   pageWithSidebar(
     
     # Application title
-    headerPanel("Visualization of gene expression levels"),
+    headerPanel("Time course experiment planner"),
     
     sidebarPanel(
+      expname_1,
       start_time,
-      numinput
+     #numinput,
+      activity_1,
+      time_1
       
     ),
     
@@ -29,7 +34,18 @@ ui <- fluidPage(
       
       # Output: Histogram ----
       # plotOutput(outputId = "distPlot")
-      
+      plotlyOutput("plot", height = "600px"),
+      textOutput("tbl_dims"),
+      div(style="height:600px; overflow:scroll; align:text-center",
+          tableOutput("contents")
+          )
     )
   )
 )
+
+
+
+
+
+
+
